@@ -99,7 +99,7 @@ def cramers_v(x, y):
 # List of categorical columns (excluding target 'y')
 categorical_cols = df.select_dtypes(include=['object']).columns.drop('y')
 
-# Compute Cramér's V for each pair of categorical variables
+#compute Cramer's V for each pair of categorical variables
 cramers_v_matrix = pd.DataFrame(index=categorical_cols, columns=categorical_cols)
 for col1 in categorical_cols:
     for col2 in categorical_cols:
@@ -114,7 +114,6 @@ plt.show()
 #%%
 from sklearn.model_selection import train_test_split
 
-# Splitting data into training and test sets
 X = df_encoded.drop('y', axis=1)  # Features (drop the target variable)
 y = df_encoded['y']  # Target variable
 
