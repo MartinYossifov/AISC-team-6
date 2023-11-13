@@ -181,6 +181,7 @@ shap_values_lr = explainer_lr(X_test)
 
 # Summary plot for Logistic Regression
 shap.summary_plot(shap_values_lr, X_test)
+
 #%%
 sample_data = {
     'age': [70], 'job': ['admin.'], 'marital': ['married'], 'education': ['secondary'], 'default': ['no'], 'balance': [500], 
@@ -197,6 +198,37 @@ sample_encoded = sample_encoded[X_train.columns]
 
 predicted_class = model.predict(sample_encoded)
 print("Predicted class:", predicted_class[0])
+#%%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#%% Random Forest SHAP (takes a while to run)
+# Explain the model's predictions using SHAP
+rf_explainer = shap.TreeExplainer(rf_model)
+rf_shap_values = rf_explainer.shap_values(X_train_rf)
+
+# Summary plot for Random Forest
+shap.summary_plot(rf_shap_values[1], X_train_rf, feature_names=X_train_rf.columns)
+#%% XGBoost
+# Explain the model's predictions using SHAP
+xgb_explainer = shap.TreeExplainer(xgb_model)
+xgb_shap_values = xgb_explainer.shap_values(X_train_rf)
+
+# Summary plot for XGBoost
+shap.summary_plot(xgb_shap_values, X_train_rf, feature_names=X_train_rf.columns)
 
 
 
