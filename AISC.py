@@ -172,5 +172,31 @@ xgb_y_pred = xgb_model.predict(X_test_rf)
 # Evaluation
 print(accuracy_score(y_test_rf, xgb_y_pred))
 print(classification_report(y_test_rf, xgb_y_pred))
+#%%
+import shap
+
+# Explain the model's predictions for Logistic Regression
+explainer_lr = shap.Explainer(model, X_train)
+shap_values_lr = explainer_lr(X_test)
+
+# Summary plot for Logistic Regression
+shap.summary_plot(shap_values_lr, X_test)
+#%%
+sample_data = {
+    'age': [70], 'job': ['admin.'], 'marital': ['married'], 'education': ['secondary'], 'default': ['no'], 'balance': [500], 
+    'housing': ['yes'], 'loan': ['no'], 'contact': ['cellular'], 'duration': [800], 'campaign': [2]
+}
+
+sample_df = pd.DataFrame(sample_data)
+sample_encoded = pd.get_dummies(sample_df, columns=sample_df.select_dtypes(include=['object']).columns)
+
+missing_cols = set(X_train.columns) - set(sample_encoded.columns)
+for c in missing_cols:
+    sample_encoded[c] = 0
+sample_encoded = sample_encoded[X_train.columns]
+
+predicted_class = model.predict(sample_encoded)
+print("Predicted class:", predicted_class[0])
+
 
 
